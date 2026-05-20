@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "LeetCode AI Debugger",
+  "version": "1.0.0",
+  "description": "AI-powered code debugger for LeetCode using Gemini",
+
+  "permissions": ["activeTab", "scripting", "storage"],
+
+  "host_permissions": ["https://leetcode.com/*"],
+
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+
+  "background": {
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["src/content/content_script.js"]
+    }
+  ],
+
+  "commands": {
+    "trigger-debug": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+D",
+        "mac": "Command+Shift+D"
+      },
+      "description": "Trigger AI debug on current code"
+    }
+  }
+}
