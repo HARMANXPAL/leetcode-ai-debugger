@@ -2,113 +2,235 @@
 
 <div align="center">
 
-**A high-performance, real-time AI assistant injected directly into the LeetCode environment.**
+**An AI-powered Chrome extension that analyzes, debugs, and improves your LeetCode solutions in real-time — without leaving the page.**
 
-[![GitHub stars](https://img.shields.io/github/stars/HARMANXPAL/leetcode-ai-debugger?style=for-the-badge&color=7C3AED)](https://github.com/HARMANXPAL/leetcode-ai-debugger/stargazers)
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-[![Chrome Extension](https://img.shields.io/badge/Chrome_Extension-4285F4?style=for-the-badge&logo=google-chrome&logoColor=white)](https://developer.chrome.com/docs/extensions/)
-[![Gemini AI](https://img.shields.io/badge/Gemini_1.5_Flash-8E44AD?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
-[![Manifest V3](https://img.shields.io/badge/Manifest-V3-orange?style=for-the-badge)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+![Chrome](https://img.shields.io/badge/Chrome-Extension-4285F4?style=flat&logo=googlechrome&logoColor=white)
+![Manifest](https://img.shields.io/badge/Manifest-V3-orange?style=flat)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=black)
+![Gemini](https://img.shields.io/badge/Gemini-AI-8E44AD?style=flat&logo=google&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat)
 
 </div>
 
 ---
 
-## 🚀 Overview
+## ✨ What It Does
 
-**LeetCode AI Debugger** is a Chrome extension designed to eliminate the friction of switching tabs between LeetCode and LLMs. It hooks directly into the **Monaco Editor** used by LeetCode, extracts your code via a bridge script, and uses **Google Gemini 1.5 Flash** to provide instant, contextual debugging and optimization feedback.
+Tired of switching between LeetCode and ChatGPT while debugging? This extension puts AI debugging **directly inside LeetCode** — as a sleek sidebar that reads your code and gives instant feedback.
 
-### Why this exists?
-Standard AI tools don't have context of the specific LeetCode problem or the language-specific constraints of the editor. This tool bridges that gap by providing a **seamless, sidebar-integrated experience.**
-
----
-
-## ✨ Core Features
-
-### 🐛 1. Contextual Debugging
-Instead of just checking syntax, the AI analyzes your logic against the problem title and description. It identifies edge cases, infinite loops, and logical fallacies.
-
-### ⚡ 2. Direct Editor Injection (Apply Fix)
-The extension uses a **Bridge Script** to bypass Chrome's isolated world restriction. This allows the AI to programmatically update the Monaco Editor instance with corrected code at the click of a button.
-
-### 💬 3. Interactive Code Chat
-Ask specific questions about your implementation.
-* *"What is the time complexity of this nested loop?"*
-* *"Can I solve this using a Monotonic Stack instead?"*
-* *"Why am I getting a TLE on large inputs?"*
-
-### 🔒 4. Zero-Footprint Privacy
-Your API key is stored locally using `chrome.storage.local`. No middleman servers are used; the connection is direct from your browser to Google's Generative AI endpoints.
+| Feature | Description |
+|---|---|
+| 🐛 **Smart Debugging** | Detects logical errors, type mismatches, and edge cases |
+| 💡 **Complexity Analysis** | Explains time and space complexity of your solution |
+| ⚡ **One-click Fix** | Applies the corrected code directly into the editor |
+| 💬 **Code Chat** | Ask anything about your code — explain, optimize, compare |
+| 🔒 **Privacy First** | Your API key stays on your machine — zero data sent to any server |
+| 🎨 **Non-intrusive UI** | Hidden by default, opens on demand with a single click |
 
 ---
 
-## 🛠️ Tech Stack & Architecture
+## 📸 Preview
 
-### The Stack
-* **Framework:** React.js (for the Sidebar and Popup UI)
-* **Bundler:** Vite with `@crxjs/vite-plugin` (for Manifest V3 synchronization)
-* **Styling:** Custom CSS with **Shadow DOM** isolation to prevent style-bleed from LeetCode.
-* **LLM:** Google Gemini 1.5 Flash (API)
+> Sidebar opens on the right side of LeetCode with a clean dark UI
 
-### How it Works (The Pipeline)
-1.  **Extraction:** `content_script.js` uses a specialized selector to pull code from the `.view-lines` class or via the `window.monaco` API.
-2.  **Messaging:** The data is passed to `background.js` (Service Worker) to handle the asynchronous API fetch.
-3.  **Processing:** Gemini 1.5 Flash processes the prompt with specific formatting rules.
-4.  **Rendering:** The response is streamed back and rendered inside a React-managed Sidebar with Markdown-like formatting.
-
----
-
-## 📥 Installation
-
-### Developer Setup
-1.  **Clone the Repo:**
-    ```bash
-    git clone [https://github.com/HARMANXPAL/leetcode-ai-debugger.git](https://github.com/HARMANXPAL/leetcode-ai-debugger.git)
-    cd leetcode-ai-debugger
-    ```
-2.  **Install Dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Build the Production Bundle:**
-    ```bash
-    npm run build
-    ```
-4.  **Load the Extension:**
-    * Open `chrome://extensions/`
-    * Enable **Developer Mode**.
-    * Click **Load Unpacked** and select the `dist` folder.
+```
+┌─────────────────────┬──────────────────────┐
+│                     │  🔬 AI Debugger      │
+│   LeetCode Editor   │  ────────────────    │
+│                     │  [ Analyze My Code ] │
+│   class Solution {  │                      │
+│     ...             │  🐛 BUGS FOUND:      │
+│   }                 │  - Type mismatch...  │
+│                     │                      │
+│                     │  💡 IMPROVEMENTS:    │
+│                     │  - Use HashMap O(n)  │
+│                     │                      │
+│                     │  [ Apply Fix ]       │
+│                     │  ────────────────    │
+│                     │  Ask about your code │
+│                     │  [_______________] ➤ │
+└─────────────────────┴──────────────────────┘
+```
 
 ---
 
-## 🔑 Configuration
+## 🛠️ Tech Stack
 
-1.  Obtain a free API Key from [Google AI Studio](https://aistudio.google.com/apikey).
-2.  Click the extension icon in your toolbar.
-3.  Paste the key into the **Settings** panel and save.
-4.  Navigate to any LeetCode problem and look for the purple **🔬** icon.
-
----
-
-## ⌨️ Keyboard Shortcuts
-
-| Action | Shortcut |
-| :--- | :--- |
-| **Trigger Analysis** | `Cmd + Shift + D` (Mac) or `Ctrl + Shift + D` (Windows) |
-| **Toggle Sidebar** | Click the floating icon |
+- **React 18** — Popup UI & sidebar components
+- **Chrome Extension APIs** — Manifest V3, storage, messaging
+- **Google Gemini API** — AI analysis (free tier)
+- **Vite + @crxjs/vite-plugin** — Fast builds for Chrome extensions
+- **Shadow DOM** — Style isolation from LeetCode's CSS
+- **Monaco Editor API** — Full code extraction (not just visible lines)
 
 ---
 
-## 🛣️ Roadmap
-- [ ] Support for Codeforces and HackerRank.
-- [ ] Dark/Light mode toggle for the Sidebar.
-- [ ] Complexity visualization charts.
-- [ ] Support for multiple LLM providers (GPT-4o, Claude 3.5).
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- Google Chrome
+- Free Gemini API key → [Get one here](https://aistudio.google.com/apikey)
+
+### Installation
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/YOUR_USERNAME/leetcode-ai-debugger.git
+cd leetcode-ai-debugger
+```
+
+**2. Install dependencies**
+```bash
+npm install
+```
+
+**3. Build the extension**
+```bash
+npm run build
+```
+
+**4. Load into Chrome**
+- Open Chrome → go to `chrome://extensions`
+- Toggle **Developer mode** ON (top right corner)
+- Click **Load unpacked**
+- Select the `dist/` folder inside the project
+
+**5. Add your API key**
+- Click the extension icon in the Chrome toolbar
+- Paste your Gemini API key
+- Click **Save Key** ✅
+
+**6. Start debugging!**
+- Go to any LeetCode problem
+- Write your solution
+- Click the **purple button** on the right edge of the screen
+- Hit **Analyze My Code**
+
+---
+
+## 🔑 Getting a Free Gemini API Key
+
+1. Visit [Google AI Studio](https://aistudio.google.com/apikey)
+2. Sign in with your Google account
+3. Click **Create API Key** → **Create new project**
+4. Copy the key and paste it in the extension popup
+
+> **Free tier limits:** 20 requests/day, resets at midnight — perfect for daily LeetCode practice!
+
+---
+
+## 📁 Project Structure
+
+```
+leetcode-ai-debugger/
+├── src/
+│   ├── popup/
+│   │   ├── Popup.jsx           # Settings UI — API key management
+│   │   └── popup.html          # Popup entry point
+│   ├── content/
+│   │   └── content_script.js   # Sidebar injection + code extraction
+│   └── background/
+│       └── background.js       # Gemini API calls + message routing
+├── manifest.json               # Chrome extension config
+├── vite.config.js              # Build configuration
+└── package.json
+```
+
+### How It Works
+
+```
+User clicks "Analyze My Code"
+         ↓
+content_script.js reads code from Monaco editor
+         ↓
+Sends message to background.js
+         ↓
+background.js calls Gemini API with your key
+         ↓
+Gemini returns bugs + improvements + fixed code
+         ↓
+Results displayed in the sidebar
+         ↓
+User clicks "Apply Fix" → code written to editor
+```
+
+---
+
+## ⌨️ Keyboard Shortcut
+
+Press **`Cmd + Shift + D`** (Mac) or **`Ctrl + Shift + D`** (Windows) to trigger analysis without clicking.
+
+---
+
+## 🧩 How to Use
+
+### Debug Mode
+1. Write your solution in LeetCode editor
+2. Click the purple **🔬** button on the right edge
+3. Click **Analyze My Code**
+4. Review bugs, improvements, and corrected code
+5. Click **⚡ Apply Fix** to paste the fix directly
+
+### Chat Mode
+Ask questions like:
+- *"What is the time complexity of my code?"*
+- *"How can I optimize this further?"*
+- *"Explain my code step by step"*
+- *"Rewrite this using dynamic programming"*
+
+Use the **quick tags** below the chat input for one-tap questions.
+
+---
+
+## 🔐 Privacy & Security
+
+- Your API key is stored **locally** using `chrome.storage.local` — never sent to any third-party server
+- Your code is sent **directly** from your browser to Google's Gemini API
+- No accounts, no tracking, no data collection
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+```bash
+# Fork the repo, then:
+git checkout -b feature/your-feature-name
+git commit -m "Add your feature"
+git push origin feature/your-feature-name
+# Open a Pull Request
+```
+
+### Ideas for contributions
+- [ ] Multi-language syntax highlighting in results
+- [ ] History of past debug sessions
+- [ ] Complexity chart visualization
+- [ ] Support for competitive programming platforms (Codeforces, HackerRank)
+- [ ] Dark/light theme toggle
+
+---
+
+## 📄 License
+
+MIT License — free to use, modify, and distribute.
+
+---
+
+## 🙏 Acknowledgements
+
+- Built with [Google Gemini API](https://ai.google.dev/)
+- Extension scaffolding via [@crxjs/vite-plugin](https://crxjs.dev/)
+- UI inspired by modern developer tools
 
 ---
 
 <div align="center">
-  Built with ❤️ for Competitive Programmers.
-  <br/>
-  <strong>If this helped your SDE prep, give it a ⭐ star!</strong>
+
+Built from scratch with ❤️ — one phase at a time
+
+⭐ **Star this repo if it helped you!** ⭐
+
 </div>
